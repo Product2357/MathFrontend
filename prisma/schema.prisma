@@ -63,19 +63,20 @@ model Module {
 }
 
 model Lesson {
-  id           String           @id @default(cuid())
-  moduleId     String
-  title        String
-  videoUrl     String?
-  theory       String?
-  desmosConfig Json?
-  order        Int
-  createdAt    DateTime         @default(now())
-  module       Module           @relation(fields: [moduleId], references: [id])
-  questions    Question[]
-  tests        Test[]
-  progresses   LessonProgress[]
-  quizAttempts QuizAttempt[]
+  id             String           @id @default(cuid())
+  moduleId       String
+  title          String
+  videoUrl       String?
+  videoObjectKey String?
+  theory         String?
+  desmosConfig   Json?
+  order          Int
+  createdAt      DateTime         @default(now())
+  module         Module           @relation(fields: [moduleId], references: [id])
+  questions      Question[]
+  tests          Test[]
+  progresses     LessonProgress[]
+  quizAttempts   QuizAttempt[]
 }
 
 model LessonProgress {

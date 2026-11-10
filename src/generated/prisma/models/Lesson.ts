@@ -39,6 +39,7 @@ export type LessonMinAggregateOutputType = {
   moduleId: string | null
   title: string | null
   videoUrl: string | null
+  videoObjectKey: string | null
   theory: string | null
   order: number | null
   createdAt: Date | null
@@ -49,6 +50,7 @@ export type LessonMaxAggregateOutputType = {
   moduleId: string | null
   title: string | null
   videoUrl: string | null
+  videoObjectKey: string | null
   theory: string | null
   order: number | null
   createdAt: Date | null
@@ -59,6 +61,7 @@ export type LessonCountAggregateOutputType = {
   moduleId: number
   title: number
   videoUrl: number
+  videoObjectKey: number
   theory: number
   desmosConfig: number
   order: number
@@ -80,6 +83,7 @@ export type LessonMinAggregateInputType = {
   moduleId?: true
   title?: true
   videoUrl?: true
+  videoObjectKey?: true
   theory?: true
   order?: true
   createdAt?: true
@@ -90,6 +94,7 @@ export type LessonMaxAggregateInputType = {
   moduleId?: true
   title?: true
   videoUrl?: true
+  videoObjectKey?: true
   theory?: true
   order?: true
   createdAt?: true
@@ -100,6 +105,7 @@ export type LessonCountAggregateInputType = {
   moduleId?: true
   title?: true
   videoUrl?: true
+  videoObjectKey?: true
   theory?: true
   desmosConfig?: true
   order?: true
@@ -198,6 +204,7 @@ export type LessonGroupByOutputType = {
   moduleId: string
   title: string
   videoUrl: string | null
+  videoObjectKey: string | null
   theory: string | null
   desmosConfig: runtime.JsonValue | null
   order: number
@@ -232,6 +239,7 @@ export type LessonWhereInput = {
   moduleId?: Prisma.StringFilter<"Lesson"> | string
   title?: Prisma.StringFilter<"Lesson"> | string
   videoUrl?: Prisma.StringNullableFilter<"Lesson"> | string | null
+  videoObjectKey?: Prisma.StringNullableFilter<"Lesson"> | string | null
   theory?: Prisma.StringNullableFilter<"Lesson"> | string | null
   desmosConfig?: Prisma.JsonNullableFilter<"Lesson">
   order?: Prisma.IntFilter<"Lesson"> | number
@@ -248,6 +256,7 @@ export type LessonOrderByWithRelationInput = {
   moduleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  videoObjectKey?: Prisma.SortOrderInput | Prisma.SortOrder
   theory?: Prisma.SortOrderInput | Prisma.SortOrder
   desmosConfig?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -267,6 +276,7 @@ export type LessonWhereUniqueInput = Prisma.AtLeast<{
   moduleId?: Prisma.StringFilter<"Lesson"> | string
   title?: Prisma.StringFilter<"Lesson"> | string
   videoUrl?: Prisma.StringNullableFilter<"Lesson"> | string | null
+  videoObjectKey?: Prisma.StringNullableFilter<"Lesson"> | string | null
   theory?: Prisma.StringNullableFilter<"Lesson"> | string | null
   desmosConfig?: Prisma.JsonNullableFilter<"Lesson">
   order?: Prisma.IntFilter<"Lesson"> | number
@@ -283,6 +293,7 @@ export type LessonOrderByWithAggregationInput = {
   moduleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  videoObjectKey?: Prisma.SortOrderInput | Prisma.SortOrder
   theory?: Prisma.SortOrderInput | Prisma.SortOrder
   desmosConfig?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -302,6 +313,7 @@ export type LessonScalarWhereWithAggregatesInput = {
   moduleId?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
   title?: Prisma.StringWithAggregatesFilter<"Lesson"> | string
   videoUrl?: Prisma.StringNullableWithAggregatesFilter<"Lesson"> | string | null
+  videoObjectKey?: Prisma.StringNullableWithAggregatesFilter<"Lesson"> | string | null
   theory?: Prisma.StringNullableWithAggregatesFilter<"Lesson"> | string | null
   desmosConfig?: Prisma.JsonNullableWithAggregatesFilter<"Lesson">
   order?: Prisma.IntWithAggregatesFilter<"Lesson"> | number
@@ -312,6 +324,7 @@ export type LessonCreateInput = {
   id?: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -328,6 +341,7 @@ export type LessonUncheckedCreateInput = {
   moduleId: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -342,6 +356,7 @@ export type LessonUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -358,6 +373,7 @@ export type LessonUncheckedUpdateInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -373,6 +389,7 @@ export type LessonCreateManyInput = {
   moduleId: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -383,6 +400,7 @@ export type LessonUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -394,6 +412,7 @@ export type LessonUncheckedUpdateManyInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -415,6 +434,7 @@ export type LessonCountOrderByAggregateInput = {
   moduleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
+  videoObjectKey?: Prisma.SortOrder
   theory?: Prisma.SortOrder
   desmosConfig?: Prisma.SortOrder
   order?: Prisma.SortOrder
@@ -430,6 +450,7 @@ export type LessonMaxOrderByAggregateInput = {
   moduleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
+  videoObjectKey?: Prisma.SortOrder
   theory?: Prisma.SortOrder
   order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -440,6 +461,7 @@ export type LessonMinOrderByAggregateInput = {
   moduleId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   videoUrl?: Prisma.SortOrder
+  videoObjectKey?: Prisma.SortOrder
   theory?: Prisma.SortOrder
   order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -556,6 +578,7 @@ export type LessonCreateWithoutModuleInput = {
   id?: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -570,6 +593,7 @@ export type LessonUncheckedCreateWithoutModuleInput = {
   id?: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -614,6 +638,7 @@ export type LessonScalarWhereInput = {
   moduleId?: Prisma.StringFilter<"Lesson"> | string
   title?: Prisma.StringFilter<"Lesson"> | string
   videoUrl?: Prisma.StringNullableFilter<"Lesson"> | string | null
+  videoObjectKey?: Prisma.StringNullableFilter<"Lesson"> | string | null
   theory?: Prisma.StringNullableFilter<"Lesson"> | string | null
   desmosConfig?: Prisma.JsonNullableFilter<"Lesson">
   order?: Prisma.IntFilter<"Lesson"> | number
@@ -624,6 +649,7 @@ export type LessonCreateWithoutProgressesInput = {
   id?: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -639,6 +665,7 @@ export type LessonUncheckedCreateWithoutProgressesInput = {
   moduleId: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -668,6 +695,7 @@ export type LessonUpdateWithoutProgressesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -683,6 +711,7 @@ export type LessonUncheckedUpdateWithoutProgressesInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -696,6 +725,7 @@ export type LessonCreateWithoutQuizAttemptsInput = {
   id?: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -711,6 +741,7 @@ export type LessonUncheckedCreateWithoutQuizAttemptsInput = {
   moduleId: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -740,6 +771,7 @@ export type LessonUpdateWithoutQuizAttemptsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -755,6 +787,7 @@ export type LessonUncheckedUpdateWithoutQuizAttemptsInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -768,6 +801,7 @@ export type LessonCreateWithoutQuestionsInput = {
   id?: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -783,6 +817,7 @@ export type LessonUncheckedCreateWithoutQuestionsInput = {
   moduleId: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -812,6 +847,7 @@ export type LessonUpdateWithoutQuestionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -827,6 +863,7 @@ export type LessonUncheckedUpdateWithoutQuestionsInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -840,6 +877,7 @@ export type LessonCreateWithoutTestsInput = {
   id?: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -855,6 +893,7 @@ export type LessonUncheckedCreateWithoutTestsInput = {
   moduleId: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -884,6 +923,7 @@ export type LessonUpdateWithoutTestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -899,6 +939,7 @@ export type LessonUncheckedUpdateWithoutTestsInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -912,6 +953,7 @@ export type LessonCreateManyModuleInput = {
   id?: string
   title: string
   videoUrl?: string | null
+  videoObjectKey?: string | null
   theory?: string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order: number
@@ -922,6 +964,7 @@ export type LessonUpdateWithoutModuleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -936,6 +979,7 @@ export type LessonUncheckedUpdateWithoutModuleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -950,6 +994,7 @@ export type LessonUncheckedUpdateManyWithoutModuleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   videoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  videoObjectKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   theory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   desmosConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   order?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1019,6 +1064,7 @@ export type LessonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   moduleId?: boolean
   title?: boolean
   videoUrl?: boolean
+  videoObjectKey?: boolean
   theory?: boolean
   desmosConfig?: boolean
   order?: boolean
@@ -1036,6 +1082,7 @@ export type LessonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   moduleId?: boolean
   title?: boolean
   videoUrl?: boolean
+  videoObjectKey?: boolean
   theory?: boolean
   desmosConfig?: boolean
   order?: boolean
@@ -1048,6 +1095,7 @@ export type LessonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   moduleId?: boolean
   title?: boolean
   videoUrl?: boolean
+  videoObjectKey?: boolean
   theory?: boolean
   desmosConfig?: boolean
   order?: boolean
@@ -1060,13 +1108,14 @@ export type LessonSelectScalar = {
   moduleId?: boolean
   title?: boolean
   videoUrl?: boolean
+  videoObjectKey?: boolean
   theory?: boolean
   desmosConfig?: boolean
   order?: boolean
   createdAt?: boolean
 }
 
-export type LessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "moduleId" | "title" | "videoUrl" | "theory" | "desmosConfig" | "order" | "createdAt", ExtArgs["result"]["lesson"]>
+export type LessonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "moduleId" | "title" | "videoUrl" | "videoObjectKey" | "theory" | "desmosConfig" | "order" | "createdAt", ExtArgs["result"]["lesson"]>
 export type LessonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   questions?: boolean | Prisma.Lesson$questionsArgs<ExtArgs>
@@ -1096,6 +1145,7 @@ export type $LessonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     moduleId: string
     title: string
     videoUrl: string | null
+    videoObjectKey: string | null
     theory: string | null
     desmosConfig: runtime.JsonValue | null
     order: number
@@ -1532,6 +1582,7 @@ export interface LessonFieldRefs {
   readonly moduleId: Prisma.FieldRef<"Lesson", 'String'>
   readonly title: Prisma.FieldRef<"Lesson", 'String'>
   readonly videoUrl: Prisma.FieldRef<"Lesson", 'String'>
+  readonly videoObjectKey: Prisma.FieldRef<"Lesson", 'String'>
   readonly theory: Prisma.FieldRef<"Lesson", 'String'>
   readonly desmosConfig: Prisma.FieldRef<"Lesson", 'Json'>
   readonly order: Prisma.FieldRef<"Lesson", 'Int'>

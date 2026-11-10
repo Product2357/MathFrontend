@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getDbClient } from "@/lib/db";
 import { requireAdmin } from "@/lib/server/admin";
+import { deleteVideoObject } from "@/lib/server/r2";
 
 const updateLessonSchema = z.object({
   title: z.string().trim().min(2).max(160),
@@ -23,14 +24,20 @@ export async function PATCH(
 
   const { lessonId } = await context.params;
   const db = getDbClient();
-  const lesson = await db.lesson.findUnique({ where: { id: lessonId }, select: { id: true } });
+  const lesson = await db.lesson.findUnique({ where: { id: lessonId }, select: { id: true, videoObjectKey: true } });
   if (!lesson) return NextResponse.json({ error: "Урок не найден" }, { status: 404 });
+
+  const replacesUploadedVideo = Boolean(parsed.data.videoUrl) && Boolean(lesson.videoObjectKey);
+  if (replacesUploadedVideo && lesson.videoObjectKey) {
+    await deleteVideoObject(lesson.videoObjectKey).catch(() => undefined);
+  }
 
   const updatedLesson = await db.lesson.update({
     where: { id: lessonId },
     data: {
       title: parsed.data.title,
       videoUrl: parsed.data.videoUrl || null,
+      ...(replacesUploadedVideo ? { videoObjectKey: null } : {}),
       theory: parsed.data.theory,
     },
     select: { id: true, title: true, videoUrl: true, theory: true },

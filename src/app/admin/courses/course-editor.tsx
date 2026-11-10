@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 
 type AdminQuestion = { id: string; prompt: string; type: string };
-type AdminLesson = { id: string; title: string; videoUrl: string | null; theory?: string | null; questions: AdminQuestion[] };
+type AdminLesson = { id: string; title: string; videoUrl: string | null; videoObjectKey?: string | null; theory?: string | null; questions: AdminQuestion[] };
 type AdminModule = { id: string; title: string; coverImage: string | null; lessons: AdminLesson[] };
 export type AdminCourse = {
   id: string;
@@ -44,6 +44,7 @@ export default function CourseEditor({ initialCourses }: { initialCourses: Admin
   const [slug, setSlug] = useState("");
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [uploadingLessonId, setUploadingLessonId] = useState<string | null>(null);
   const selectedCourse = courses.find((course) => course.id === selectedId) ?? null;
 
   const addCourse = async (event: FormEvent<HTMLFormElement>) => {
@@ -174,6 +175,58 @@ export default function CourseEditor({ initialCourses }: { initialCourses: Admin
       setNotice("Данные курса сохранены.");
     } catch (requestError) {
       setError(requestError instanceof Error ? requestError.message : "Не удалось сохранить курс");
+    }
+  };
+
+  const setLessonVideo = (lessonId: string, patch: Partial<AdminLesson>) => {
+    setCourses((current) => current.map((course) => ({
+      ...course,
+      modules: course.modules.map((module) => ({
+        ...module,
+        lessons: module.lessons.map((lesson) => lesson.id === lessonId ? { ...lesson, ...patch } : lesson),
+      })),
+    })));
+  };
+
+  const uploadLessonVideo = async (lessonId: string, file: File) => {
+    setError("");
+    setNotice("");
+    setUploadingLessonId(lessonId);
+    try {
+      const { key, uploadUrl } = await getData<{ key: string; uploadUrl: string }>(
+        await fetch(`/api/admin/lessons/${lessonId}/video`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contentType: file.type, size: file.size }),
+        }),
+      );
+      const uploaded = await fetch(uploadUrl, { method: "PUT", headers: { "Content-Type": file.type }, body: file });
+      if (!uploaded.ok) throw new Error("Не удалось загрузить видео в хранилище");
+      await getData<{ videoObjectKey: string }>(
+        await fetch(`/api/admin/lessons/${lessonId}/video`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key }),
+        }),
+      );
+      setLessonVideo(lessonId, { videoObjectKey: key, videoUrl: null });
+      setNotice("Видео загружено.");
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Не удалось загрузить видео");
+    } finally {
+      setUploadingLessonId(null);
+    }
+  };
+
+  const removeLessonVideo = async (lessonId: string) => {
+    setError("");
+    setNotice("");
+    try {
+      await getData<{ ok: boolean }>(await fetch(`/api/admin/lessons/${lessonId}/video`, { method: "DELETE" }));
+      setLessonVideo(lessonId, { videoObjectKey: null });
+      setNotice("Загруженное видео удалено.");
+    } catch (requestError) {
+      setError(requestError instanceof Error ? requestError.message : "Не удалось удалить видео");
     }
   };
 
@@ -312,13 +365,32 @@ export default function CourseEditor({ initialCourses }: { initialCourses: Admin
               </form>
               {module.coverImage ? <div className="my-3 h-28 rounded-xl bg-cover bg-center" style={{ backgroundImage: `url("${module.coverImage}")` }} aria-label={`Обложка модуля ${module.title}`} role="img" /> : null}
               <form onSubmit={(event) => addLesson(event, module.id)} className="my-4 grid gap-3 rounded-xl bg-slate-50 p-4"><input name="title" required minLength={2} maxLength={160} className={fieldClass} placeholder="Название урока" /><input name="videoUrl" type="url" className={fieldClass} placeholder="Ссылка на YouTube или прямой URL видео (GCS)" /><textarea name="theory" maxLength={12000} className={`${fieldClass} min-h-20`} placeholder="Теория или конспект урока" /><button type="submit" className={`${buttonClass} justify-self-start`}>Добавить урок</button></form>
-              <div className="space-y-4">{module.lessons.map((lesson) => <article key={lesson.id} className="border-t border-slate-200 pt-4"><h4 className="font-semibold">{lesson.title}</h4><p className="mt-1 text-xs text-slate-500">{lesson.videoUrl ? "Видео добавлено" : "Без видео"} · {lesson.questions.length} заданий</p>
+              <div className="space-y-4">{module.lessons.map((lesson) => <article key={lesson.id} className="border-t border-slate-200 pt-4"><h4 className="font-semibold">{lesson.title}</h4><p className="mt-1 text-xs text-slate-500">{lesson.videoObjectKey || lesson.videoUrl ? "Видео добавлено" : "Без видео"} · {lesson.questions.length} заданий</p>
                 <form onSubmit={(event) => updateLesson(event, lesson.id)} className="mt-3 grid gap-3 rounded-xl bg-slate-50 p-4">
                   <input name="title" required minLength={2} maxLength={160} defaultValue={lesson.title} className={fieldClass} aria-label="Название урока" />
                   <input name="videoUrl" type="url" defaultValue={lesson.videoUrl ?? ""} className={fieldClass} aria-label="Ссылка на видео" placeholder="YouTube или прямой URL видео (GCS)" />
                   <textarea name="theory" maxLength={12000} defaultValue={lesson.theory ?? ""} className={`${fieldClass} min-h-20`} aria-label="Теория урока" placeholder="Теория или конспект урока" />
                   <button type="submit" className={`${buttonClass} justify-self-start`}>Сохранить урок</button>
                 </form>
+                <div className="mt-3 grid gap-2 rounded-xl bg-slate-50 p-4 text-sm">
+                  <p className="font-medium text-slate-700">Видеофайл в Cloudflare R2</p>
+                  {lesson.videoObjectKey ? <p className="text-xs text-slate-500">Файл загружен. Клиенты увидят его по временной ссылке после проверки доступа.</p> : <p className="text-xs text-slate-500">Файл не загружен.</p>}
+                  <div className="flex flex-wrap items-center gap-3">
+                    <input
+                      type="file"
+                      accept="video/mp4,video/webm,video/quicktime"
+                      disabled={uploadingLessonId === lesson.id}
+                      onChange={(event) => {
+                        const file = event.currentTarget.files?.[0];
+                        event.currentTarget.value = "";
+                        if (file) void uploadLessonVideo(lesson.id, file);
+                      }}
+                      aria-label="Загрузить видео урока"
+                    />
+                    {uploadingLessonId === lesson.id ? <span className="text-xs text-slate-500">Загрузка…</span> : null}
+                    {lesson.videoObjectKey ? <button type="button" onClick={() => void removeLessonVideo(lesson.id)} className={buttonClass}>Удалить загруженное видео</button> : null}
+                  </div>
+                </div>
                 <form onSubmit={(event) => addQuestion(event, lesson.id)} className="mt-3 grid gap-3 rounded-xl bg-slate-50 p-4 sm:grid-cols-2"><input name="prompt" required minLength={3} maxLength={2000} className={`${fieldClass} sm:col-span-2`} placeholder="Текст задания" /><select name="type" className={fieldClass}><option value="MULTIPLE_CHOICE">Выбор ответа</option><option value="NUMERIC">Числовой ответ</option><option value="FORMULA">Формула</option></select><input name="correctAnswer" required className={fieldClass} placeholder="Правильный ответ" /><textarea name="choices" className={`${fieldClass} sm:col-span-2`} placeholder="Варианты ответа, по одному в строке" /><button type="submit" className={`${buttonClass} justify-self-start`}>Добавить задание</button></form>
                 {lesson.questions.length ? <ul className="mt-3 space-y-1 text-sm text-slate-600">{lesson.questions.map((question) => <li key={question.id}>{question.prompt}</li>)}</ul> : null}
               </article>)}</div>

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getDbClient } from "@/lib/db";
 import { getCurrentUser, hasActiveAccess } from "@/lib/server/session";
 import { hasCourseAccess } from "@/lib/server/course-access";
+import { createVideoPlaybackUrl } from "@/lib/server/r2";
 
 export async function GET(
   _request: Request,
@@ -20,6 +21,7 @@ export async function GET(
       id: true,
       title: true,
       videoUrl: true,
+      videoObjectKey: true,
       theory: true,
       module: {
         select: {
@@ -53,6 +55,10 @@ export async function GET(
     return NextResponse.json({ error: "Этот курс не назначен вашему аккаунту." }, { status: 403 });
   }
 
+  const videoUrl = lesson.videoObjectKey
+    ? await createVideoPlaybackUrl(lesson.videoObjectKey)
+    : lesson.videoUrl;
+
   const sequence = lesson.module.course.modules.flatMap((module) => module.lessons);
   const lessonIndex = sequence.findIndex((item) => item.id === lesson.id);
   const progress = await getDbClient().lessonProgress.findUnique({
@@ -64,7 +70,7 @@ export async function GET(
     lesson: {
       id: lesson.id,
       title: lesson.title,
-      videoUrl: lesson.videoUrl,
+      videoUrl,
       theory: lesson.theory,
       course: {
         id: lesson.module.course.id,

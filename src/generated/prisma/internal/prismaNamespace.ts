@@ -1403,6 +1403,7 @@ export const LessonScalarFieldEnum = {
   moduleId: 'moduleId',
   title: 'title',
   videoUrl: 'videoUrl',
+  videoObjectKey: 'videoObjectKey',
   theory: 'theory',
   desmosConfig: 'desmosConfig',
   order: 'order',

@@ -41,6 +41,7 @@ export async function GET() {
               title: true,
               order: true,
               videoUrl: true,
+              videoObjectKey: true,
               theory: true,
               questions: { orderBy: { createdAt: "asc" }, select: { id: true, prompt: true, type: true } },
             },
