@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -33,7 +32,7 @@ export default function SignInPage() {
       return;
     }
 
-    router.push("/dashboard");
+    router.push(result.user?.role === "ADMIN" ? "/admin" : "/dashboard");
   };
 
   return (
@@ -84,12 +83,9 @@ export default function SignInPage() {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-slate-600">
-          Нет аккаунта?{" "}
-          <Link href="/auth/sign-up" className="font-semibold text-sky-700 hover:text-sky-800">
-            Зарегистрироваться
-          </Link>
-        </div>
+        <p className="mt-6 text-center text-sm text-slate-600">
+          Доступ выдаёт администратор после подтверждения оплаты.
+        </p>
       </div>
     </main>
   );

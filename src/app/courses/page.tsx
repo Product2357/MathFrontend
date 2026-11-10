@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowRight, BookOpen, GraduationCap } from "lucide-react";
-import { courses as courseStyles } from "@/lib/mock-data";
 
 type CatalogCourse = {
   id: string;
   slug: string;
   title: string;
   description: string | null;
+  coverImage: string | null;
   level: string | null;
   price: number | null;
   modules: { id: string; lessons: { id: string }[] }[];
@@ -25,14 +25,15 @@ export default function CoursesPage() {
 
     void fetch("/api/courses")
       .then(async (response) => {
-        if (!response.ok) throw new Error("Не удалось загрузить курсы");
-        return response.json();
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error ?? "Не удалось загрузить курсы");
+        return result;
       })
       .then((result) => {
         if (active) setCourses(result.courses);
       })
-      .catch(() => {
-        if (active) setLoadError("Не удалось загрузить каталог. Проверьте подключение к серверу.");
+      .catch((error: unknown) => {
+        if (active) setLoadError(error instanceof Error ? error.message : "Не удалось загрузить ваши курсы.");
       })
       .finally(() => {
         if (active) setLoading(false);
@@ -62,7 +63,6 @@ export default function CoursesPage() {
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {courses.map((course) => {
-            const style = courseStyles.find((item) => item.slug === course.slug);
             const lessonsCount = course.modules.reduce((total, module) => total + module.lessons.length, 0);
 
             return (
@@ -70,7 +70,14 @@ export default function CoursesPage() {
               key={course.id}
               className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
-              <div className={`h-40 bg-gradient-to-br ${style?.accent ?? "from-slate-500 to-slate-700"}`}>
+              <div
+                className="h-40 bg-cover bg-center"
+                style={{
+                  backgroundImage: course.coverImage
+                    ? `linear-gradient(0deg, rgba(15, 23, 42, .65), rgba(15, 23, 42, .05)), url("${course.coverImage}")`
+                    : "linear-gradient(135deg, #0284c7, #7c3aed)",
+                }}
+              >
                 <div className="flex h-full items-end justify-between p-5 text-white">
                   <GraduationCap className="h-10 w-10 opacity-90" />
                   <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-sm">
@@ -109,7 +116,10 @@ export default function CoursesPage() {
             );
           })}
           {!loading && courses.length === 0 ? (
-            <p className="text-sm text-slate-500">{loadError || "Опубликованных курсов пока нет."}</p>
+            <div className="text-sm text-slate-600">
+              <p>{loadError || "Администратор пока не назначил вам курсы."}</p>
+              {loadError.includes("вход") ? <Link href="/auth/sign-in" className="mt-2 inline-block font-semibold text-sky-700">Перейти ко входу →</Link> : null}
+            </div>
           ) : null}
         </div>
       </div>

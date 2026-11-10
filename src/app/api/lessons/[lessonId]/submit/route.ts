@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getDbClient } from "@/lib/db";
-import { getCurrentUser } from "@/lib/server/session";
+import { getCurrentUser, hasActiveAccess } from "@/lib/server/session";
+import { hasCourseAccess } from "@/lib/server/course-access";
 
 const submissionSchema = z.object({
   answers: z.record(z.string(), z.union([z.string(), z.number()])),
@@ -17,6 +18,9 @@ export async function POST(
 ) {
   const user = await getCurrentUser();
   if (!user) return NextResponse.json({ error: "Требуется вход" }, { status: 401 });
+  if (!hasActiveAccess(user)) {
+    return NextResponse.json({ error: "Срок доступа закончился. Обратитесь к администратору." }, { status: 403 });
+  }
 
   const parsed = submissionSchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Некорректные ответы" }, { status: 400 });
@@ -24,12 +28,19 @@ export async function POST(
   const { lessonId } = await context.params;
   const db = getDbClient();
   const lesson = await db.lesson.findUnique({
-    where: { id: lessonId },
-    select: { id: true, questions: { select: { id: true, correctAnswer: true } } },
+    where: { id: lessonId, module: { course: { isPublished: true } } },
+    select: {
+      id: true,
+      module: { select: { courseId: true } },
+      questions: { select: { id: true, correctAnswer: true } },
+    },
   });
 
   if (!lesson || lesson.questions.length === 0) {
     return NextResponse.json({ error: "Урок или задания не найдены" }, { status: 404 });
+  }
+  if (!await hasCourseAccess(user.id, user.role, lesson.module.courseId)) {
+    return NextResponse.json({ error: "Этот курс не назначен вашему аккаунту." }, { status: 403 });
   }
 
   const correctCount = lesson.questions.reduce((count, question) => {

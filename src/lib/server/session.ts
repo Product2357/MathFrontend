@@ -5,6 +5,19 @@ import { getDbClient } from "@/lib/db";
 export const SESSION_COOKIE = "mathmentor_session";
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 30;
 
+type AccessUser = {
+  role: string;
+  subscriptions: { status: string; expiresAt: Date | null }[];
+};
+
+export function hasActiveAccess(user: AccessUser, now = new Date()) {
+  return user.role === "ADMIN" || user.subscriptions.some(
+    (subscription) => subscription.status === "ACTIVE"
+      && subscription.expiresAt !== null
+      && subscription.expiresAt > now,
+  );
+}
+
 function hashToken(token: string) {
   return createHash("sha256").update(token).digest("hex");
 }

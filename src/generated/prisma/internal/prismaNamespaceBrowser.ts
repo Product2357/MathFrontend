@@ -116,6 +116,7 @@ export const ModuleScalarFieldEnum = {
   id: 'id',
   courseId: 'courseId',
   title: 'title',
+  coverImage: 'coverImage',
   order: 'order',
   createdAt: 'createdAt'
 } as const

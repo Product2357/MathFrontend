@@ -1390,6 +1390,7 @@ export const ModuleScalarFieldEnum = {
   id: 'id',
   courseId: 'courseId',
   title: 'title',
+  coverImage: 'coverImage',
   order: 'order',
   createdAt: 'createdAt'
 } as const
@@ -1664,6 +1665,20 @@ export type EnumQuestionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'QuestionType[]'
  */
 export type ListEnumQuestionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QuestionType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 /**

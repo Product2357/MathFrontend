@@ -38,6 +38,7 @@ export type ModuleMinAggregateOutputType = {
   id: string | null
   courseId: string | null
   title: string | null
+  coverImage: string | null
   order: number | null
   createdAt: Date | null
 }
@@ -46,6 +47,7 @@ export type ModuleMaxAggregateOutputType = {
   id: string | null
   courseId: string | null
   title: string | null
+  coverImage: string | null
   order: number | null
   createdAt: Date | null
 }
@@ -54,6 +56,7 @@ export type ModuleCountAggregateOutputType = {
   id: number
   courseId: number
   title: number
+  coverImage: number
   order: number
   createdAt: number
   _all: number
@@ -72,6 +75,7 @@ export type ModuleMinAggregateInputType = {
   id?: true
   courseId?: true
   title?: true
+  coverImage?: true
   order?: true
   createdAt?: true
 }
@@ -80,6 +84,7 @@ export type ModuleMaxAggregateInputType = {
   id?: true
   courseId?: true
   title?: true
+  coverImage?: true
   order?: true
   createdAt?: true
 }
@@ -88,6 +93,7 @@ export type ModuleCountAggregateInputType = {
   id?: true
   courseId?: true
   title?: true
+  coverImage?: true
   order?: true
   createdAt?: true
   _all?: true
@@ -183,6 +189,7 @@ export type ModuleGroupByOutputType = {
   id: string
   courseId: string
   title: string
+  coverImage: string | null
   order: number
   createdAt: Date
   _count: ModuleCountAggregateOutputType | null
@@ -214,6 +221,7 @@ export type ModuleWhereInput = {
   id?: Prisma.StringFilter<"Module"> | string
   courseId?: Prisma.StringFilter<"Module"> | string
   title?: Prisma.StringFilter<"Module"> | string
+  coverImage?: Prisma.StringNullableFilter<"Module"> | string | null
   order?: Prisma.IntFilter<"Module"> | number
   createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
@@ -224,6 +232,7 @@ export type ModuleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  coverImage?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   course?: Prisma.CourseOrderByWithRelationInput
@@ -237,6 +246,7 @@ export type ModuleWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ModuleWhereInput | Prisma.ModuleWhereInput[]
   courseId?: Prisma.StringFilter<"Module"> | string
   title?: Prisma.StringFilter<"Module"> | string
+  coverImage?: Prisma.StringNullableFilter<"Module"> | string | null
   order?: Prisma.IntFilter<"Module"> | number
   createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string
   course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>
@@ -247,6 +257,7 @@ export type ModuleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  coverImage?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ModuleCountOrderByAggregateInput
@@ -263,6 +274,7 @@ export type ModuleScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Module"> | string
   courseId?: Prisma.StringWithAggregatesFilter<"Module"> | string
   title?: Prisma.StringWithAggregatesFilter<"Module"> | string
+  coverImage?: Prisma.StringNullableWithAggregatesFilter<"Module"> | string | null
   order?: Prisma.IntWithAggregatesFilter<"Module"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Module"> | Date | string
 }
@@ -270,6 +282,7 @@ export type ModuleScalarWhereWithAggregatesInput = {
 export type ModuleCreateInput = {
   id?: string
   title: string
+  coverImage?: string | null
   order: number
   createdAt?: Date | string
   course: Prisma.CourseCreateNestedOneWithoutModulesInput
@@ -280,6 +293,7 @@ export type ModuleUncheckedCreateInput = {
   id?: string
   courseId: string
   title: string
+  coverImage?: string | null
   order: number
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutModuleInput
@@ -288,6 +302,7 @@ export type ModuleUncheckedCreateInput = {
 export type ModuleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   course?: Prisma.CourseUpdateOneRequiredWithoutModulesNestedInput
@@ -298,6 +313,7 @@ export type ModuleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutModuleNestedInput
@@ -307,6 +323,7 @@ export type ModuleCreateManyInput = {
   id?: string
   courseId: string
   title: string
+  coverImage?: string | null
   order: number
   createdAt?: Date | string
 }
@@ -314,6 +331,7 @@ export type ModuleCreateManyInput = {
 export type ModuleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -322,6 +340,7 @@ export type ModuleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -340,6 +359,7 @@ export type ModuleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  coverImage?: Prisma.SortOrder
   order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -352,6 +372,7 @@ export type ModuleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  coverImage?: Prisma.SortOrder
   order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -360,6 +381,7 @@ export type ModuleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   courseId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  coverImage?: Prisma.SortOrder
   order?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -440,6 +462,7 @@ export type ModuleUpdateOneRequiredWithoutLessonsNestedInput = {
 export type ModuleCreateWithoutCourseInput = {
   id?: string
   title: string
+  coverImage?: string | null
   order: number
   createdAt?: Date | string
   lessons?: Prisma.LessonCreateNestedManyWithoutModuleInput
@@ -448,6 +471,7 @@ export type ModuleCreateWithoutCourseInput = {
 export type ModuleUncheckedCreateWithoutCourseInput = {
   id?: string
   title: string
+  coverImage?: string | null
   order: number
   createdAt?: Date | string
   lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutModuleInput
@@ -486,6 +510,7 @@ export type ModuleScalarWhereInput = {
   id?: Prisma.StringFilter<"Module"> | string
   courseId?: Prisma.StringFilter<"Module"> | string
   title?: Prisma.StringFilter<"Module"> | string
+  coverImage?: Prisma.StringNullableFilter<"Module"> | string | null
   order?: Prisma.IntFilter<"Module"> | number
   createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string
 }
@@ -493,6 +518,7 @@ export type ModuleScalarWhereInput = {
 export type ModuleCreateWithoutLessonsInput = {
   id?: string
   title: string
+  coverImage?: string | null
   order: number
   createdAt?: Date | string
   course: Prisma.CourseCreateNestedOneWithoutModulesInput
@@ -502,6 +528,7 @@ export type ModuleUncheckedCreateWithoutLessonsInput = {
   id?: string
   courseId: string
   title: string
+  coverImage?: string | null
   order: number
   createdAt?: Date | string
 }
@@ -525,6 +552,7 @@ export type ModuleUpdateToOneWithWhereWithoutLessonsInput = {
 export type ModuleUpdateWithoutLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   course?: Prisma.CourseUpdateOneRequiredWithoutModulesNestedInput
@@ -534,6 +562,7 @@ export type ModuleUncheckedUpdateWithoutLessonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   courseId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -541,6 +570,7 @@ export type ModuleUncheckedUpdateWithoutLessonsInput = {
 export type ModuleCreateManyCourseInput = {
   id?: string
   title: string
+  coverImage?: string | null
   order: number
   createdAt?: Date | string
 }
@@ -548,6 +578,7 @@ export type ModuleCreateManyCourseInput = {
 export type ModuleUpdateWithoutCourseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUpdateManyWithoutModuleNestedInput
@@ -556,6 +587,7 @@ export type ModuleUpdateWithoutCourseInput = {
 export type ModuleUncheckedUpdateWithoutCourseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessons?: Prisma.LessonUncheckedUpdateManyWithoutModuleNestedInput
@@ -564,6 +596,7 @@ export type ModuleUncheckedUpdateWithoutCourseInput = {
 export type ModuleUncheckedUpdateManyWithoutCourseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -603,6 +636,7 @@ export type ModuleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   courseId?: boolean
   title?: boolean
+  coverImage?: boolean
   order?: boolean
   createdAt?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -614,6 +648,7 @@ export type ModuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   courseId?: boolean
   title?: boolean
+  coverImage?: boolean
   order?: boolean
   createdAt?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -623,6 +658,7 @@ export type ModuleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   courseId?: boolean
   title?: boolean
+  coverImage?: boolean
   order?: boolean
   createdAt?: boolean
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
@@ -632,11 +668,12 @@ export type ModuleSelectScalar = {
   id?: boolean
   courseId?: boolean
   title?: boolean
+  coverImage?: boolean
   order?: boolean
   createdAt?: boolean
 }
 
-export type ModuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "title" | "order" | "createdAt", ExtArgs["result"]["module"]>
+export type ModuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "title" | "coverImage" | "order" | "createdAt", ExtArgs["result"]["module"]>
 export type ModuleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>
   lessons?: boolean | Prisma.Module$lessonsArgs<ExtArgs>
@@ -659,6 +696,7 @@ export type $ModulePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: string
     courseId: string
     title: string
+    coverImage: string | null
     order: number
     createdAt: Date
   }, ExtArgs["result"]["module"]>
@@ -1089,6 +1127,7 @@ export interface ModuleFieldRefs {
   readonly id: Prisma.FieldRef<"Module", 'String'>
   readonly courseId: Prisma.FieldRef<"Module", 'String'>
   readonly title: Prisma.FieldRef<"Module", 'String'>
+  readonly coverImage: Prisma.FieldRef<"Module", 'String'>
   readonly order: Prisma.FieldRef<"Module", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Module", 'DateTime'>
 }

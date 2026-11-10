@@ -19,15 +19,15 @@ enum QuestionType {
 }
 
 model User {
-  id               String        @id @default(cuid())
+  id               String           @id @default(cuid())
   name             String?
-  email            String        @unique
+  email            String           @unique
   passwordHash     String?
   googleId         String?
-  role             Role          @default(STUDENT)
-  isActive         Boolean       @default(true)
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  role             Role             @default(STUDENT)
+  isActive         Boolean          @default(true)
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
   enrollments      Enrollment[]
   payments         Payment[]
   lessonProgresses LessonProgress[]
@@ -37,28 +37,29 @@ model User {
 }
 
 model Course {
-  id          String      @id @default(cuid())
-  slug        String      @unique
+  id          String       @id @default(cuid())
+  slug        String       @unique
   title       String
   description String?
   coverImage  String?
   price       Float?
   level       String?
-  isPublished Boolean     @default(false)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  isPublished Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
   modules     Module[]
   enrollments Enrollment[]
 }
 
 model Module {
-  id        String   @id @default(cuid())
-  courseId  String
-  title     String
-  order     Int
-  createdAt DateTime @default(now())
-  course    Course   @relation(fields: [courseId], references: [id])
-  lessons   Lesson[]
+  id         String   @id @default(cuid())
+  courseId   String
+  title      String
+  coverImage String?
+  order      Int
+  createdAt  DateTime @default(now())
+  course     Course   @relation(fields: [courseId], references: [id])
+  lessons    Lesson[]
 }
 
 model Lesson {
@@ -143,7 +144,7 @@ model Enrollment {
   status    String   @default("ACTIVE")
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-  course    Course  @relation(fields: [courseId], references: [id])
+  course    Course   @relation(fields: [courseId], references: [id])
 
   @@unique([userId, courseId])
 }
@@ -163,7 +164,7 @@ model Subscription {
 model Payment {
   id        String   @id @default(cuid())
   userId    String
-  amount    Float
+  amount    Decimal  @db.Decimal(12, 2)
   currency  String   @default("USD")
   stripeId  String?
   status    String
